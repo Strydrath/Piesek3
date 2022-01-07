@@ -79,21 +79,21 @@ public class UIelements {
             avocado = new Food("./res/food/avocado.png",45,420,1,1, Stages.ROOM, "Awocado", true, "Awokado zawiera substancję zwaną persin, która jest toksyczna dla psów i może powodować wymioty i biegunkę."){
                 @Override
                 public void onClick(){
-                    System.out.println("food");
+                    System.out.println(this.getInfo());
                     Game.setGenerate(true);
                 }
             };
             carrot = new Food("./res/food/carrot.png",45,420,1,1, Stages.ROOM, "Marchewka", true, "Szczególnie surowa; Jej twarda konsystencja powoduje, że rozgryzienie jej zajmuje psu dłuższą chwilę, a niewielka zawartość kalorii sprawia, że jest to przekąska odpowiednia dla psów z nadwagą"){
                 @Override
                 public void onClick(){
-                    System.out.println("food");
+                    System.out.println(this.getInfo());
                     Game.setGenerate(true);
                 }
             };
             banana = new Food("./res/food/banana.png",45,420,1,1, Stages.ROOM, "Banan", true, "banany są najs dla piesków"){
                 @Override
                 public void onClick(){
-                    System.out.println("food");
+                    System.out.println(this.getInfo());
                     Game.setGenerate(true);
                 }
             };
