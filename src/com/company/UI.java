@@ -9,7 +9,7 @@ import java.time.LocalTime;
 public class UI extends JPanel implements MouseListener {
     private final int GAME_WIDTH;
     private final int GAME_HEIGHT;
-    private Stages stage;
+    private static Stages stage;
 
     //new colors
     private final Color burgundy =  new Color(92,30,40);
@@ -28,6 +28,9 @@ public class UI extends JPanel implements MouseListener {
 
     private final Font font1 = new  Font("Consolas",Font.BOLD,25);
 
+    public static void setStage(Stages s){
+        stage = s;
+    }
 
     public UI(int game_width, int game_height) {
         GAME_WIDTH = game_width;
@@ -76,8 +79,7 @@ public class UI extends JPanel implements MouseListener {
         g.setColor(brownish);
         g.fillRect(340,445, 60,60);
 
-        g.setColor(yellowish);
-        g.fillRect(550,445, 60,60);
+        UIelements.getButtonNew().paintArray(g,0);
     }
     public void drawLoadMenu(Graphics g){
         g.setColor(whitebluish);
@@ -172,23 +174,23 @@ public class UI extends JPanel implements MouseListener {
     public void drawRoom(Graphics g, Dog dog){
         g.setColor(my_pink);
         g.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-        UIelements.getBackground().paintArray(g,0);
-        UIelements.getBed().paintArray(g,0);
-        UIelements.getDoor().paintArray(g,0);
+        UIelements.getBackground().paint(g,0);
+        UIelements.getBed().paint(g,0);
+        UIelements.getDoor().paint(g,0);
 
         //back buttons
-        UIelements.getButtonNew().paintArray(g,0);
-        UIelements.getButtonLoad().paintArray(g,0);
-        UIelements.getButtonSave().paintArray(g,0);
+        UIelements.getButtonNew().paint(g,0);
+        UIelements.getButtonLoad().paint(g,0);
+        UIelements.getButtonSave().paint(g,0);
 
         drawMagicBars(g, dog);
         drawLocalTime(g);
-        UIelements.getDog().paintArray(g,0);
+        UIelements.getDog().paint(g,0);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        UIelements.getStosik().click(e.getX(),e.getY(),stage);
     }
 
     @Override

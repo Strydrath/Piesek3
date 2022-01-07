@@ -29,6 +29,7 @@ public class Game implements Runnable{
 
     //flaga oznaczająca początek gry, umozliwiajaca uruchomienie watku
     private boolean run = true;
+    private static boolean generate;
     //dogo
     public Dog dog = new Dog();
 
@@ -37,7 +38,7 @@ public class Game implements Runnable{
     public static BufferedImage characterSLn, characterSLm, characterSRn, characterSRm;
     public UIelements uIelements = new UIelements();
 
-    public Food[] foods = new Food[12];
+    public Food[] foods = new Food[3];
 
     //funny variables
     private static boolean disposed = false;
@@ -47,6 +48,9 @@ public class Game implements Runnable{
     private int x,y;
     private boolean left, right;
 
+    public static void setGenerate(boolean g){
+        generate = g;
+    }
 
     //public static void changeDispose(){disposed = !disposed;}
 
@@ -60,9 +64,14 @@ public class Game implements Runnable{
 
     private void generateFood(){
         Random random = new Random();
-        rand = random.nextInt(2);
+        rand = random.nextInt(3);
+        for (Food f:
+             foods) {
+            f.setClickable(false);
+        }
+        foods[rand].setClickable(true);
         System.out.println(rand);
-        foods[rand].paintArray(g,0);
+        generate = false;
     }
 
 
@@ -113,24 +122,26 @@ public class Game implements Runnable{
         //g.clearRect(0,0,ui.getGAME_WIDTH(),ui.getGAME_HEIGHT());
         g.setColor(Color.pink);
         g.drawRect(0,0,ui.getGAME_WIDTH(),ui.getGAME_HEIGHT());
-        System.out.println("mamy render");
 
-        if(ui.getStage() == Stages.MENU){
+
+        if(ui.getStage() == Stages.START_MENU){
             ui.drawMenuFrame(g);
-            System.out.println("mamy menu");
-            if(ui.getStage() == Stages.START_MENU){
-                ui.drawStartMenu(g);
-            }
-            else if(ui.getStage() == Stages.MENU){
-                ui.drawNewMenu(g,dog);
-            }
-            else if (ui.getStage() == Stages.LOAD_MENU) {
-                 ui.drawLoadMenu(g);
-            }
+            ui.drawStartMenu(g);
+        }
+        else if(ui.getStage() == Stages.MENU){
+            ui.drawMenuFrame(g);
+            ui.drawNewMenu(g,dog);
+        }
+        else if (ui.getStage() == Stages.LOAD_MENU) {
+            ui.drawMenuFrame(g);
+             ui.drawLoadMenu(g);
         }
         else {
             ui.drawRoom(g,dog);
-            generateFood();
+            foods[rand].paint(g,0);
+            if(generate) {
+                generateFood();
+            }
         }
     }
 

@@ -17,6 +17,7 @@ public class Food extends Button{
         this.name = name;
         this.eatable = eatable;
         this.info = info;
+        this.clickable = false;
     }
     public String getName() {
         return name;

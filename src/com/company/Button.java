@@ -15,6 +15,10 @@ public class Button {
     public boolean clickable = true;
     public Stages stage;
 
+    public void setClickable(boolean c){
+        clickable = c;
+    }
+
     public Button(String path, int left, int top, int pxWidth, int pxHeight, Stages stage) throws IOException {
         this.bufferedImage = ImageIO.read(new File(path));
         this.left = left;
@@ -42,6 +46,11 @@ public class Button {
                 }
             }
         }
+    }
+    public void paint(Graphics g, int looper) {
+        // 0 - to kolor brak koloru (przezroczystaosc)
+        g.drawImage(bufferedImage,left,top,null);
+
     }
 
     public boolean toClickOrNotToClick(int screenX, int screenY, Stages stage){
