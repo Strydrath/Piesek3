@@ -62,18 +62,22 @@ public class Game implements Runnable{
 
     }
 
-    private void generateFood(){
-        Random random = new Random();
-        rand = random.nextInt(3);
-        for (Food f:
-             foods) {
-            f.setClickable(false);
+    public void generateFood(){
+        if(generate) {
+            Random random = new Random();
+            rand = random.nextInt(3);
+            for (Food f :
+                    foods) {
+                f.setClickable(false);
+            }
+            foods[rand].setClickable(true);
+            System.out.println(rand);
+            generate = false;
         }
-        foods[rand].setClickable(true);
-        System.out.println(rand);
-        generate = false;
     }
-
+    public Food getRandomFood(){
+        return foods[rand];
+    }
 
     public void createDisplay(){
         frame = new JFrame ("Piesek");
@@ -87,11 +91,15 @@ public class Game implements Runnable{
         ui.setMaximumSize(ui.getDimension());
         ui.setMinimumSize(ui.getDimension());
         ui.setFocusable(false);
+        ui.setDog(dog);
+        ui.setGame(this);
 
         frame.add(ui);
         //frame.addKeyListener(input);
         frame.pack();
-
+        createFoods();
+        generate=true;
+        generateFood();
         createFoods();
         run();
     }
@@ -119,30 +127,9 @@ public class Game implements Runnable{
         g = bs.getDrawGraphics();*/
         g = ui.getGraphics();
         g.setFont(new Font("Consolas",Font.BOLD,25));
-        //g.clearRect(0,0,ui.getGAME_WIDTH(),ui.getGAME_HEIGHT());
-        g.setColor(Color.pink);
-        g.drawRect(0,0,ui.getGAME_WIDTH(),ui.getGAME_HEIGHT());
+        ui.setDog(dog);
 
 
-        if(ui.getStage() == Stages.START_MENU){
-            ui.drawMenuFrame(g);
-            ui.drawStartMenu(g);
-        }
-        else if(ui.getStage() == Stages.MENU){
-            ui.drawMenuFrame(g);
-            ui.drawNewMenu(g,dog);
-        }
-        else if (ui.getStage() == Stages.LOAD_MENU) {
-            ui.drawMenuFrame(g);
-             ui.drawLoadMenu(g);
-        }
-        else {
-            ui.drawRoom(g,dog);
-            foods[rand].paint(g,0);
-            if(generate) {
-                generateFood();
-            }
-        }
     }
 
     @Override
@@ -157,8 +144,9 @@ public class Game implements Runnable{
             if((double)(time - lastTime) > 1000.0/fps ){
                 update();
                 input.update();
-                render();
                 lastTime=time;
+                ui.repaint();
+                render();
             }
         }
     }

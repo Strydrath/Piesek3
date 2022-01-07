@@ -10,7 +10,8 @@ public class UI extends JPanel implements MouseListener {
     private final int GAME_WIDTH;
     private final int GAME_HEIGHT;
     private static Stages stage;
-
+    private Game game;
+    private Dog dog;
     //new colors
     private final Color burgundy =  new Color(92,30,40);
     private final Color darkgundy = new Color(79,26,35);
@@ -39,6 +40,10 @@ public class UI extends JPanel implements MouseListener {
         addMouseListener(this);
     }
 
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
     public int getGAME_WIDTH() {
         return GAME_WIDTH;
     }
@@ -47,6 +52,13 @@ public class UI extends JPanel implements MouseListener {
         return GAME_HEIGHT;
     }
 
+    public Dog getDog() {
+        return dog;
+    }
+
+    public void setDog(Dog dog) {
+        this.dog = dog;
+    }
 
     public Dimension getDimension(){
         return new Dimension(GAME_WIDTH,GAME_HEIGHT);
@@ -172,25 +184,50 @@ public class UI extends JPanel implements MouseListener {
     }
 
     public void drawRoom(Graphics g, Dog dog){
-        g.setColor(my_pink);
-        g.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        //g.setColor(my_pink);
+        //g.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
         UIelements.getBackground().paint(g,0);
         UIelements.getBed().paint(g,0);
         UIelements.getDoor().paint(g,0);
 
         //back buttons
-        UIelements.getButtonNew().paint(g,0);
+        UIelements.getButtonNewR().paint(g,0);
         UIelements.getButtonLoad().paint(g,0);
         UIelements.getButtonSave().paint(g,0);
 
         drawMagicBars(g, dog);
         drawLocalTime(g);
         UIelements.getDog().paint(g,0);
+        game.getRandomFood().paint(g,0);
+    }
+
+    @Override
+    public void paintComponent(Graphics g){
+        g.setFont(new Font("Consolas",Font.BOLD,25));
+
+        if(stage == Stages.START_MENU){
+            drawMenuFrame(g);
+            drawStartMenu(g);
+        }
+        else if(getStage() == Stages.MENU){
+            drawMenuFrame(g);
+            drawNewMenu(g,dog);
+        }
+        else if (getStage() == Stages.LOAD_MENU) {
+            drawMenuFrame(g);
+            drawLoadMenu(g);
+        }
+        else {
+            drawRoom(g,dog);
+
+        }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         UIelements.getStosik().click(e.getX(),e.getY(),stage);
+        game.generateFood();
+        repaint();
     }
 
     @Override

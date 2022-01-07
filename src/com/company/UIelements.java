@@ -10,7 +10,7 @@ public class UIelements {
     private static Button dog;
     //background
     private static Button background, door, bed;
-    private static Button buttonNew, buttonLoad, buttonSave;
+    private static Button buttonNew, buttonLoad, buttonSave, buttonNewR;
     private static Stosik stosik;
     //foods
     private static Food avocado, carrot, banana;
@@ -73,8 +73,9 @@ public class UIelements {
                     UI.setStage(Stages.ROOM);
                 }
             };
-            buttonLoad = new Button("./res/background/blue.png",345,375,1,1, Stages.ROOM);
-            buttonSave = new Button("./res/background/green.png",1,1,1,1, Stages.ROOM);
+            buttonNewR = new Button("./res/background/yellow.png",900,60,1,1, Stages.ROOM);
+            buttonLoad = new Button("./res/background/blue.png",820,60,1,1, Stages.ROOM);
+            buttonSave = new Button("./res/background/green.png",860,60,1,1, Stages.ROOM);
             avocado = new Food("./res/food/avocado.png",45,420,1,1, Stages.ROOM, "Awocado", true, "Awokado zawiera substancję zwaną persin, która jest toksyczna dla psów i może powodować wymioty i biegunkę."){
                 @Override
                 public void onClick(){
@@ -101,6 +102,7 @@ public class UIelements {
             stosik.add(door);
             stosik.add(bed);
             stosik.add(buttonNew);
+            stosik.add(buttonNewR);
             stosik.add(buttonLoad);
             stosik.add(buttonSave);
             stosik.add(avocado);
@@ -111,5 +113,9 @@ public class UIelements {
             e.printStackTrace();
         }
 
+    }
+
+    public static Button getButtonNewR() {
+        return buttonNewR;
     }
 }
